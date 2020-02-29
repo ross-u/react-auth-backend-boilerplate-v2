@@ -81,16 +81,4 @@ router.get('/me', isLoggedIn, (req, res, next) => {
   res.status(200).json(currentUserSessionData);
 });
 
-// - check if `username` already exists in the DB
-//  - if username exists - forward the error to the error middleware using `next()`
-//  - else if username doesn't exists hash the password and create new user in the DB
-//  - then assign the  new user document to `req.session.currentUser` and then send  json response
-
-// GET '/auth/private'   --> Only for testing 
-router.get('/private', isLoggedIn, (req, res) => {
-  res
-    .status(200)  // OK
-    .json( { message: 'Test - This is private and the user is logged in' } );
-});
-
 module.exports = router;
