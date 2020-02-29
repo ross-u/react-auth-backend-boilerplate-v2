@@ -70,17 +70,19 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/auth', auth);
 
 
-// ERROR HANDLING
+// 404 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
   res.status(404).json({ code: 'not found' });
 });
 
+// ERROR HANDLING
 app.use((err, req, res, next) => {
   // always log the error
   console.error('ERROR', req.method, req.path, err);
 
-  // only render if the error ocurred before sending the response
+  // only send the error if the error ocurred before sending the response 
+  // (don't try to send the response after it has already been sent)
   if (!res.headersSent) {
     const statusError = err.status || '500';
     res.status(statusError).json(err);
